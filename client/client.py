@@ -21,7 +21,7 @@
 # THE SOFTWARE.
 
 # VARIABLES
-ROOT = "/home/finley"
+ROOT = "/home/finley" # make sure this is an absolute path
 HOST = "localhost:8008"
 USERNAME = "admin"
 PASSWORD = "password"
@@ -40,9 +40,9 @@ print("Done getting path list")
 remote_paths = r.text.split("\n")
 local_paths = []
 
-for (dirpath, dirnames, filenames) in os.walk("/home/finley"):
+for (dirpath, dirnames, filenames) in os.walk(ROOT):
     for filename in filenames:
-        local_paths.append(os.path.join(dirpath.replace("/home/finley",""), filename))
+        local_paths.append(os.path.join(dirpath.replace(ROOT,""), filename))
 
 paths_to_dl = []
 
@@ -65,6 +65,6 @@ for path in paths_to_dl:
 print("Getting files...")
 
 for uri in paths_to_dl:
-    os.system("curl -u admin:password http://localhost:8008/get/"+uri+" > "+uri)
+    os.system("curl -u "+USERNAME+":"+PASSWORD+" http://"+HOST+"/get/"+uri+" > "+ ROOT + uri)
 
 print("Done")
